@@ -4,7 +4,9 @@ const { RequestError } = require("../../helpers");
 const updateFavorite = async (req, res, next) => {
   try {
     const { contactId } = req.params;
-    const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    const {_id: owner}= req.user;
+
+    const result = await Contact.findByIdAndUpdate({contactId, owner}, req.body, {
       new: true,
     });
     if (!result) {
